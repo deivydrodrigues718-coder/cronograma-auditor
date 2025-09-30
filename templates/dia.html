@@ -11,16 +11,32 @@
         <div class="card">
             <div class="card-title">📝 Blocos de Estudo</div>
             
-            {% set topicos = [dia.topico1_id, dia.topico2_id, dia.topico3_id] %}
-            {% for topico_id in topicos %}
-                {% set t = topico_id|get_topico %}
-                <div class="topico-item">
-                    <div class="topico-nome">Bloco {{ loop.index }}: {{ t.disciplina.nome if t else 'Tópico' }}</div>
-                    <div class="topico-meta">{{ t.nome if t else 'Carregando...' }}</div>
-                    <div class="topico-meta">⏱️ 45 minutos</div>
-                    <div class="topico-meta">📝 10-20 questões FGV</div>
-                </div>
-            {% endfor %}
+            {% if dia.topico1 %}
+            <div class="topico-item" style="border-left-color: {{ dia.topico1.disciplina.cor }};">
+                <div class="topico-nome">Bloco 1: {{ dia.topico1.disciplina.nome }}</div>
+                <div class="topico-meta">{{ dia.topico1.nome }}</div>
+                <div class="topico-meta">⏱️ 45 minutos</div>
+                <div class="topico-meta">📝 10-20 questões FGV</div>
+            </div>
+            {% endif %}
+            
+            {% if dia.topico2 %}
+            <div class="topico-item" style="border-left-color: {{ dia.topico2.disciplina.cor }};">
+                <div class="topico-nome">Bloco 2: {{ dia.topico2.disciplina.nome }}</div>
+                <div class="topico-meta">{{ dia.topico2.nome }}</div>
+                <div class="topico-meta">⏱️ 45 minutos</div>
+                <div class="topico-meta">📝 10-20 questões FGV</div>
+            </div>
+            {% endif %}
+            
+            {% if dia.topico3 %}
+            <div class="topico-item" style="border-left-color: {{ dia.topico3.disciplina.cor }};">
+                <div class="topico-nome">Bloco 3: {{ dia.topico3.disciplina.nome }}</div>
+                <div class="topico-meta">{{ dia.topico3.nome }}</div>
+                <div class="topico-meta">⏱️ 45 minutos</div>
+                <div class="topico-meta">📝 10-20 questões FGV</div>
+            </div>
+            {% endif %}
             
             <div class="topico-item" style="border-left-color: #fb8c00;">
                 <div class="topico-nome">🔄 Revisão 24h</div>
