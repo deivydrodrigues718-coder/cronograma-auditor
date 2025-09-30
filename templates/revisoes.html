@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="header">
+    <h1>Revisões</h1>
+    <p>Sistema 24h / 7d / 30d</p>
+</div>
+
+<div class="container">
+    {% if revisoes|length == 0 %}
+    <div class="card">
+        <div class="card-title">✅ Tudo em dia!</div>
+        <p style="color: #718096; font-size: 14px;">Você não tem revisões pendentes no momento.</p>
+    </div>
+    {% else %}
+    
+    <div class="card">
+        <div class="card-title">⏰ Revisões Agendadas</div>
+        
+        {% for rev in revisoes %}
+            {% set t = rev.topico_id|get_topico %}
+            <div class="topico-item" style="border-left-color: {% if rev.tipo == '24h' %}#f39c12{% elif rev.tipo == '7d' %}#3498db{% else %}#9b59b6{% endif %};">
+                <div class="topico-nome">
+                    {{ t.disciplina.nome if t else 'Tópico' }}
+                    <span class="badge {% if rev.tipo == '24h' %}badge-warning{% elif rev.tipo == '7d' %}badge-info{% else %}badge-success{% endif %}">
+                        {{ rev.tipo }}
+                    </span>
+                </div>
+                <div class="topico-meta">{{ t.nome if t else 'Carregando...' }}</div>
+                <div class="topico-meta">📅 Agendada para {{ rev.data_agendada.strftime('%d/%m às %H:%M') }}</div>
+            </div>
+        {% endfor %}
+        
+        <button class="btn" style="margin-top: 16px;">
+            Iniciar Revisões Pendentes
+        </button>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
