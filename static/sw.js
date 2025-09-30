@@ -1,10 +1,20 @@
-const CACHE_NAME = 'ciclo-rfb-v1';
-const URLS = ['/', '/static/manifest.json'];
+const CACHE_NAME = 'rfb-cronograma-v1';
+const URLS = [
+    '/',
+    '/disciplinas',
+    '/revisoes',
+    '/estatisticas',
+    '/static/manifest.json'
+];
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(URLS)));
+    e.waitUntil(
+        caches.open(CACHE_NAME).then(cache => cache.addAll(URLS))
+    );
 });
 
 self.addEventListener('fetch', e => {
-  e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
+    e.respondWith(
+        caches.match(e.request).then(response => response || fetch(e.request))
+    );
 });
