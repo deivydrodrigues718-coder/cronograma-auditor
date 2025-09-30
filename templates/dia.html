@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="header">
+    <h1>Dia {{ dia.numero }}</h1>
+    <p>Complete seu estudo de hoje</p>
+</div>
+
+<div class="container">
+    <form method="POST" action="/concluir_dia/{{ dia.id }}">
+        <div class="card">
+            <div class="card-title">📝 Blocos de Estudo</div>
+            
+            {% set topicos = [dia.topico1_id, dia.topico2_id, dia.topico3_id] %}
+            {% for topico_id in topicos %}
+                {% set t = topico_id|get_topico %}
+                <div class="topico-item">
+                    <div class="topico-nome">Bloco {{ loop.index }}: {{ t.disciplina.nome if t else 'Tópico' }}</div>
+                    <div class="topico-meta">{{ t.nome if t else 'Carregando...' }}</div>
+                    <div class="topico-meta">⏱️ 45 minutos</div>
+                    <div class="topico-meta">📝 10-20 questões FGV</div>
+                </div>
+            {% endfor %}
+            
+            <div class="topico-item" style="border-left-color: #fb8c00;">
+                <div class="topico-nome">🔄 Revisão 24h</div>
+                <div class="topico-meta">15 minutos</div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-title">📊 Registrar Resultado</div>
+            
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; font-size: 14px; color: #4a5568; margin-bottom: 8px;">
+                    Total de questões resolvidas:
+                </label>
+                <input type="number" name="questoes" min="0" value="30" 
+                       style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 16px;">
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; font-size: 14px; color: #4a5568; margin-bottom: 8px;">
+                    Questões corretas:
+                </label>
+                <input type="number" name="acertos" min="0" value="21" 
+                       style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 16px;">
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; font-size: 14px; color: #4a5568; margin-bottom: 8px;">
+                    Tempo estudado (minutos):
+                </label>
+                <input type="number" name="minutos" min="0" value="150" 
+                       style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 16px;">
+            </div>
+            
+            <button type="submit" class="btn">
+                ✅ Concluir Dia e Agendar Revisões
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
