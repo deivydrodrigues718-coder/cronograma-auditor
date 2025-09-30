@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="header">
+    <h1>Auditor Fiscal RFB</h1>
+    <p>Cronograma de Estudos</p>
+</div>
+
+<div class="container">
+    <div class="card">
+        <div class="card-title">📊 Seu Progresso</div>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-value">{{ total_horas }}h</div>
+                <div class="stat-label">Horas estudadas</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">{{ total_questoes }}</div>
+                <div class="stat-label">Questões</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">{{ taxa_acerto }}%</div>
+                <div class="stat-label">Taxa de acerto</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">{{ dias_concluidos }}</div>
+                <div class="stat-label">Dias completos</div>
+            </div>
+        </div>
+    </div>
+    
+    {% if dia_atual %}
+    <div class="card">
+        <div class="card-title">📅 Hoje - Dia {{ dia_atual.numero }}</div>
+        
+        {% set t1 = dia_atual.topico1_id|get_topico %}
+        {% set t2 = dia_atual.topico2_id|get_topico %}
+        {% set t3 = dia_atual.topico3_id|get_topico %}
+        
+        <div class="topico-item">
+            <div class="topico-nome">{{ t1.disciplina.nome if t1 else 'Tópico 1' }}</div>
+            <div class="topico-meta">{{ t1.nome if t1 else 'Carregando...' }}</div>
+            <div class="topico-meta">⏱️ 45 min + 10-20 questões</div>
+        </div>
+        
+        <div class="topico-item">
+            <div class="topico-nome">{{ t2.disciplina.nome if t2 else 'Tópico 2' }}</div>
+            <div class="topico-meta">{{ t2.nome if t2 else 'Carregando...' }}</div>
+            <div class="topico-meta">⏱️ 45 min + 10-20 questões</div>
+        </div>
+        
+        <div class="topico-item">
+            <div class="topico-nome">{{ t3.disciplina.nome if t3 else 'Tópico 3' }}</div>
+            <div class="topico-meta">{{ t3.nome if t3 else 'Carregando...' }}</div>
+            <div class="topico-meta">⏱️ 45 min + 10-20 questões</div>
+        </div>
+        
+        <div class="topico-item" style="border-left-color: #fb8c00;">
+            <div class="topico-nome">🔄 Revisão 24h</div>
+            <div class="topico-meta">15 min - questões rápidas e anotações</div>
+        </div>
+        
+        <a href="/dia/{{ dia_atual.id }}" class="btn" style="margin-top: 16px;">
+            Iniciar Estudo
+        </a>
+    </div>
+    {% endif %}
+    
+    {% if revisoes_pendentes > 0 %}
+    <div class="card">
+        <div class="card-title">⚠️ Revisões Pendentes</div>
+        <p style="color: #718096; font-size: 14px;">
+            Você tem <strong>{{ revisoes_pendentes }}</strong> revisões atrasadas.
+        </p>
+        <a href="/revisoes" class="btn" style="margin-top: 12px; background: #f39c12;">
+            Ver Revisões
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+app.jinja_env.filters['get_topico'] = lambda id: Topico.query.get(id) if id else None
+</script>
+{% endblock %}
