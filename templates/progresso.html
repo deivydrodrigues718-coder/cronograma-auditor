@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="header">
+    <h1>Progresso Detalhado</h1>
+    <p>Acompanhamento por disciplina e tópico</p>
+</div>
+
+<div class="container">
+    {% for item in dados %}
+    <div class="card">
+        <div class="card-title" style="color: {{ item.disciplina.cor }};">
+            {{ item.disciplina.nome }}
+        </div>
+        
+        <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 16px;">
+            <div class="stat-item">
+                <div class="stat-value" style="font-size: 20px;">{{ item.total_questoes }}</div>
+                <div class="stat-label">Questões</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" style="font-size: 20px;">{{ item.total_acertos }}</div>
+                <div class="stat-label">Acertos</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" style="font-size: 20px; color: {{ item.disciplina.cor }};">{{ item.taxa }}%</div>
+                <div class="stat-label">Taxa</div>
+            </div>
+        </div>
+        
+        <div style="max-height: 300px; overflow-y: auto;">
+            {% for topico in item.topicos %}
+            <div style="padding: 8px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center;">
+                <div style="flex: 1; font-size: 13px; color: #2d3748;">
+                    {{ topico.nome }}
+                </div>
+                <div style="text-align: right;">
+                    <span style="font-size: 12px; color: #718096;">
+                        {% if topico.questoes_resolvidas > 0 %}
+                            {{ topico.questoes_acertos }}/{{ topico.questoes_resolvidas }}
+                            ({{ ((topico.questoes_acertos / topico.questoes_resolvidas * 100)|round(1)) if topico.questoes_resolvidas > 0 else 0 }}%)
+                        {% else %}
+                            0 questões
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
