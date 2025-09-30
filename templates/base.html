@@ -96,18 +96,27 @@
         .btn:active {
             transform: scale(0.98);
         }
+        <!-- Substituir a div class="nav-bar" inteira por: -->
+<div class="nav-bar">
+    <a href="/" class="nav-item {% if request.path == '/' %}active{% endif %}">
+        <span class="nav-icon">🏠</span>
+        Início
+    </a>
+    <a href="/disciplinas" class="nav-item {% if '/disciplinas' in request.path %}active{% endif %}">
+        <span class="nav-icon">📚</span>
+        Matérias
+    </a>
+    <a href="/progresso" class="nav-item {% if '/progresso' in request.path %}active{% endif %}">
+        <span class="nav-icon">📈</span>
+        Progresso
+    </a>
+    <a href="/revisoes" class="nav-item {% if '/revisoes' in request.path %}active{% endif %}">
+        <span class="nav-icon">🔄</span>
+        Revisões
+    </a>
+</div>
         
-        .nav-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            border-top: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        
         }
         
         .nav-item {
