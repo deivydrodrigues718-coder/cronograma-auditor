@@ -33,27 +33,29 @@
     <div class="card">
         <div class="card-title">📅 Hoje - Dia {{ dia_atual.numero }}</div>
         
-        {% set t1 = dia_atual.topico1_id|get_topico %}
-        {% set t2 = dia_atual.topico2_id|get_topico %}
-        {% set t3 = dia_atual.topico3_id|get_topico %}
-        
-        <div class="topico-item">
-            <div class="topico-nome">{{ t1.disciplina.nome if t1 else 'Tópico 1' }}</div>
-            <div class="topico-meta">{{ t1.nome if t1 else 'Carregando...' }}</div>
+        {% if dia_atual.topico1 %}
+        <div class="topico-item" style="border-left-color: {{ dia_atual.topico1.disciplina.cor }};">
+            <div class="topico-nome">{{ dia_atual.topico1.disciplina.nome }}</div>
+            <div class="topico-meta">{{ dia_atual.topico1.nome }}</div>
             <div class="topico-meta">⏱️ 45 min + 10-20 questões</div>
         </div>
+        {% endif %}
         
-        <div class="topico-item">
-            <div class="topico-nome">{{ t2.disciplina.nome if t2 else 'Tópico 2' }}</div>
-            <div class="topico-meta">{{ t2.nome if t2 else 'Carregando...' }}</div>
+        {% if dia_atual.topico2 %}
+        <div class="topico-item" style="border-left-color: {{ dia_atual.topico2.disciplina.cor }};">
+            <div class="topico-nome">{{ dia_atual.topico2.disciplina.nome }}</div>
+            <div class="topico-meta">{{ dia_atual.topico2.nome }}</div>
             <div class="topico-meta">⏱️ 45 min + 10-20 questões</div>
         </div>
+        {% endif %}
         
-        <div class="topico-item">
-            <div class="topico-nome">{{ t3.disciplina.nome if t3 else 'Tópico 3' }}</div>
-            <div class="topico-meta">{{ t3.nome if t3 else 'Carregando...' }}</div>
+        {% if dia_atual.topico3 %}
+        <div class="topico-item" style="border-left-color: {{ dia_atual.topico3.disciplina.cor }};">
+            <div class="topico-nome">{{ dia_atual.topico3.disciplina.nome }}</div>
+            <div class="topico-meta">{{ dia_atual.topico3.nome }}</div>
             <div class="topico-meta">⏱️ 45 min + 10-20 questões</div>
         </div>
+        {% endif %}
         
         <div class="topico-item" style="border-left-color: #fb8c00;">
             <div class="topico-nome">🔄 Revisão 24h</div>
@@ -78,10 +80,4 @@
     </div>
     {% endif %}
 </div>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-app.jinja_env.filters['get_topico'] = lambda id: Topico.query.get(id) if id else None
-</script>
 {% endblock %}
