@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="header">
+    <h1>Disciplinas</h1>
+    <p>Todas as matérias do edital</p>
+</div>
+
+<div class="container">
+    <div class="card">
+        <div class="card-title">📚 Módulo Básico</div>
+        {% for disc in disciplinas %}
+            {% if disc.modulo == 'Básico' %}
+            <div class="topico-item" style="border-left-color: {{ disc.cor }};">
+                <div class="topico-nome">{{ disc.nome }}</div>
+                <div class="topico-meta">{{ disc.topicos|length }} tópicos cadastrados</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 15%;"></div>
+                </div>
+                <span class="badge badge-info">Em andamento</span>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    
+    <div class="card">
+        <div class="card-title">⚖️ Módulo Específico</div>
+        {% for disc in disciplinas %}
+            {% if disc.modulo == 'Específico' %}
+            <div class="topico-item" style="border-left-color: {{ disc.cor }};">
+                <div class="topico-nome">{{ disc.nome }}</div>
+                <div class="topico-meta">{{ disc.topicos|length }} tópicos cadastrados</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 5%;"></div>
+                </div>
+                <span class="badge badge-warning">Não iniciado</span>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
