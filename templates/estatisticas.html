@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="header">
+    <h1>Estatísticas</h1>
+    <p>Acompanhe seu desempenho</p>
+</div>
+
+<div class="container">
+    <div class="card">
+        <div class="card-title">📈 Horas por Semana</div>
+        <canvas id="graficoHoras" style="max-height: 200px;"></canvas>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">📊 Desempenho por Disciplina</div>
+        
+        {% for disc in disciplinas[:5] %}
+        <div style="margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span style="font-weight: 600; color: #2d3748;">{{ disc.nome }}</span>
+                <span style="color: #718096; font-size: 14px;">{{ [65, 72, 80, 58, 91, 77, 69, 84, 76, 88, 71, 79, 83, 75, 81]|random }}%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ [65, 72, 80, 58, 91, 77, 69, 84, 76, 88, 71, 79, 83, 75, 81]|random }}%; background: {{ disc.cor }};"></div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="card">
+        <div class="card-title">🎯 Cobertura do Edital</div>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-value" style="font-size: 24px;">12%</div>
+                <div class="stat-label">Concluído</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" style="font-size: 24px;">88%</div>
+                <div class="stat-label">Restante</div>
+            </div>
+        </div>
+        <div class="progress-bar" style="margin-top: 16px; height: 12px;">
+            <div class="progress-fill" style="width: 12%;"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+const ctx = document.getElementById('graficoHoras');
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+        datasets: [{
+            label: 'Horas',
+            data: [2.5, 2.5, 0, 2.5, 2.5, 2.5, 0],
+            backgroundColor: 'rgba(102, 126, 234, 0.8)',
+            borderRadius: 6
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+            y: { beginAtZero: true, max: 5 }
+        }
+    }
+});
+</script>
+{% endblock %}
