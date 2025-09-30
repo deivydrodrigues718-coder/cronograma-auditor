@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dia N</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="/static/manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/static/sw.js')
+    }
+  </script>
+
+  <style>
+    body{font-family:sans-serif;margin:16px;background:#fafafa}
+    .card{border:1px solid #ddd;border-radius:10px;padding:14px;margin-bottom:12px;background:#fff}
+    button{width:100%;padding:14px;border:none;border-radius:8px;background:#1e88e5;color:#fff;font-size:16px}
+    h1{font-size:20px;margin:8px 0 16px}
+    .t{font-size:16px;margin:6px 0}
+  </style>
+</head>
+<body>
+  <h1>Dia N</h1>
+
+  {% for t in dia.topicos %}
+    <div class="card">
+      <div class="t">{{ t }}</div>
+      <div>45 min + 10–20 questões (FGV)</div>
+    </div>
+  {% endfor %}
+
+  <div class="card">
+    <div class="t">Revisão 24h</div>
+    <div>15 min – questões rápidas e anotações</div>
+  </div>
+
+  <form method="post" action="/concluir">
+    <button>Concluir Dia e Gerar Próximo</button>
+  </form>
+</body>
+</html>
