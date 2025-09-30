@@ -18,17 +18,18 @@
         <div class="card-title">⏰ Revisões Agendadas</div>
         
         {% for rev in revisoes %}
-            {% set t = rev.topico_id|get_topico %}
+            {% if rev.topico %}
             <div class="topico-item" style="border-left-color: {% if rev.tipo == '24h' %}#f39c12{% elif rev.tipo == '7d' %}#3498db{% else %}#9b59b6{% endif %};">
                 <div class="topico-nome">
-                    {{ t.disciplina.nome if t else 'Tópico' }}
+                    {{ rev.topico.disciplina.nome }}
                     <span class="badge {% if rev.tipo == '24h' %}badge-warning{% elif rev.tipo == '7d' %}badge-info{% else %}badge-success{% endif %}">
                         {{ rev.tipo }}
                     </span>
                 </div>
-                <div class="topico-meta">{{ t.nome if t else 'Carregando...' }}</div>
+                <div class="topico-meta">{{ rev.topico.nome }}</div>
                 <div class="topico-meta">📅 Agendada para {{ rev.data_agendada.strftime('%d/%m às %H:%M') }}</div>
             </div>
+            {% endif %}
         {% endfor %}
         
         <button class="btn" style="margin-top: 16px;">
